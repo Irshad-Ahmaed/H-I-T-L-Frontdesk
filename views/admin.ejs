@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-g" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supervisor Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Supervisor Dashboard</h1>
+      <p>AI Agent Help Requests</p>
+    </header>
+
+    <main class="container">
+      <!-- Pending request section -->
+      <section class="column">
+        <h2>Recent Pending Requests</h2>
+        <div class="card-list">
+          <% if (pendingRequests.length === 0) { %>
+          <div class="card empty">
+            <p>No pending requests. </p>
+          </div>
+          <% } else { %> <% pendingRequests.forEach(request => { %>
+          <div class="card pending">
+            <p><strong>From:</strong> <%= request.customer_phone %></p>
+            <p><strong>Question:</strong> "<%= request.original_question %>"</p>
+            <p class="meta">
+              Received: <%= new Date(request.createdAt).toLocaleString() %>
+            </p>
+
+            <form
+              action="/admin/request/<%= request._id %>/resolve"
+              method="POST"
+              class="resolve-form"
+            >
+              <textarea
+                name="answer"
+                placeholder="Type your answer here..."
+                required
+              ></textarea>
+              <button type="submit">Resolve</button>
+            </form>
+          </div>
+          <% }) %> <% } %>
+        </div>
+      </section>
+
+      <!-- Unresolved section -->
+      <section class="column">
+        <h2>Unresolved (Timeouts)</h2>
+        <div class="card-list">
+          <% if (unresolvedRequests.length === 0) { %>
+          <div class="card empty"><p>No timeouts.</p></div>
+          <% } else { %> <% unresolvedRequests.forEach(request => { %>
+          <div class="card unresolved">
+            <p><strong>From:</strong> <%= request.customer_phone %></p>
+            <p><strong>Question:</strong> "<%= request.original_question %>"</p>
+            <p class="meta">
+              Received: <%= new Date(request.createdAt).toLocaleString() %>
+            </p>
+
+            <form
+              action="/admin/request/<%= request._id %>/resolve"
+              method="POST"
+              class="resolve-form"
+            >
+              <textarea
+                name="answer"
+                placeholder="Type your answer here..."
+                required
+              ></textarea>
+              <button type="submit">Resolve</button>
+            </form>
+          </div>
+
+          <% }) %> <% } %>
+        </div>
+      </section>
+
+      <!-- Learned Answers (Knowledge Base) Section -->
+      <section class="column">
+        <h2>Learned Answers (Knowledge Base)</h2>
+        <div class="card-list">
+          <% if (learnedAnswers.length === 0) { %>
+          <div class="card empty">
+            <p>No answers learned yet.</p>
+          </div>
+          <% } else { %> <% learnedAnswers.forEach(fact => { %>
+          <div class="card learned">
+            <p><strong>Q:</strong> "<%= fact.question_text %>"</p>
+            <p><strong>A:</strong> "<%= fact.answer_text %>"</p>
+          </div>
+          <% }) %> <% } %>
+        </div>
+      </section>
+
+      <!-- Recently Resolved section -->
+      <section class="column">
+        <h2>Recently Resolved</h2>
+        <div class="card-list">
+          <% if (resolvedRequests.length === 0) { %>
+          <div class="card empty">
+            <p>No requests resolved yet.</p>
+          </div>
+          <% } else { %> <% resolvedRequests.forEach(request => { %>
+          <div class="card resolved">
+            <p><strong>Q:</strong> "<%= request.original_question %>"</p>
+            <p><strong>A:</strong> "<%= request.supervisor_answer %>"</p>
+            <p class="meta">
+              Resolved: <%= new Date(request.resolvedAt).toLocaleString() %>
+            </p>
+          </div>
+          <% }) %> <% } %>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
