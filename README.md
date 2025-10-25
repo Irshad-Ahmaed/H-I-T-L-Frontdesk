@@ -7,24 +7,34 @@ This system is built on a Service-Oriented Architecture (SOA), split into two de
 # 🧠 System Architecture And Tables
 
 Here’s a high-level view of how the Human-in-the-Loop AI Supervisor works:
+
 ![System Architecture Diagram](./public/architect.png)
 
-Here’s a tables of the Human-in-the-Loop AI Supervisor works:
+Here’s a tables of the Human-in-the-Loop AI Supervisor:
+
 ![Table Diagram](./public/tables.png)
 
 # 1.2 Installation Steps
 ## A. Clone and Install Repositories
 
 ### Clone the LiveKit Agent Starter And Backend-Services repo
-git clone https://github.com/Irshad-Ahmaed/H-I-T-L-Frontdesk/tree/ai-agent , https://github.com/Irshad-Ahmaed/H-I-T-L-Frontdesk
+```
+git clone https://github.com/Irshad-Ahmaed/H-I-T-L-Frontdesk.git backend-services
+
+git clone -b ai-agent https://github.com/Irshad-Ahmaed/H-I-T-L-Frontdesk.git ai-agent
+```
 
 ### Navigate to the backend and install
+```
 cd backend-services
 npm install
+```
 
 ### Navigate to the agent and install
+```
 cd ai-agent
-pnpm install # Uses pnpm as per original setup
+pnpm install
+```
 
 ## B. Configure Environment Variables
 - You will find necessary .env keys in .env.example file
